@@ -66,9 +66,9 @@ class HomePage extends StatelessWidget {
               )
             else
               IconButton(
-            icon: const Icon(Icons.login_rounded),
-            tooltip: 'Login',
-            onPressed: () {
+                icon: const Icon(Icons.login_rounded),
+                tooltip: 'Login',
+                onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => LoginView()));
             },
@@ -76,7 +76,6 @@ class HomePage extends StatelessWidget {
           condition(),
           ],
         ),
-      
     );
   }
 
@@ -101,8 +100,6 @@ class HomePage extends StatelessWidget {
       default:
         widget = Container();
     }
-
-    // Finally returning a Widget
     return widget;
   }
 
