@@ -73,9 +73,37 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => LoginView()));
             },
           ),
+          condition(),
           ],
         ),
       
     );
   }
+
+
+  final checked = true;
+
+  Widget condition() {
+    Widget widget=Container();
+    switch (checked) {
+      case true:
+        widget = Text(
+          'Second Widget',
+          style: TextStyle(
+            fontSize: 48,
+            fontWeight: FontWeight.bold,
+          ),
+        );
+        break;
+      case false:
+        widget = Container();
+        break;
+      default:
+        widget = Container();
+    }
+
+    // Finally returning a Widget
+    return widget;
+  }
+
 }
