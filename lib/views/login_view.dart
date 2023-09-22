@@ -1,6 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myapp1/views/error_login_view.dart';
+import 'package:myapp1/views/verify_email_view.dart';
+import 'package:myapp1/main.dart';
 
 
 class LoginView extends StatefulWidget {
@@ -127,14 +131,19 @@ Future<void> _launchUrl() async {
                 print('Response status: ${response.statusCode}');
                 print(response.body);
                 _requestField.text =response.body;
-    //             Fluttertoast.showToast(
-    //     msg: "This is a Toast message",
-    //     toastLength: Toast.LENGTH_SHORT,
-    //     gravity: ToastGravity.CENTER,
-    //     timeInSecForIosWeb: 1,
-    //     textColor: Colors.white,
-    //     fontSize: 16.0
-    // );
+
+                if(response.body.indexOf("pedram")>0){
+                    isLogin= true;
+                }else if(response.body.indexOf("ghaneipour")>0){
+                  isLogin= true;
+                  Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => VerifyEmailViewState()));
+                }
+                else{
+                  isLogin= false;
+                  Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ErrorEmailViewState()));
+                }
                 print("=============C===============");  
               }
               catch(e) {
