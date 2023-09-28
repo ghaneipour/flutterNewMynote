@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp1/views/login_view.dart';
 import 'package:myapp1/views/register_view.dart';
 import 'package:myapp1/views/verify_email_view.dart';
+import 'package:myapp1/views/verify_sms_view.dart';
 
 bool isLogin = false;
 void main() {
@@ -54,6 +55,14 @@ class HomePage extends StatelessWidget {
             tooltip: 'Register',
             onPressed: () {  Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => RegisterView()));           
+            },
+          ),
+
+          IconButton(
+            icon: const Icon(Icons.sms_rounded),
+            tooltip: 'SMS',
+            onPressed: () {  Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => VerifySmsViewState()));           
             },
           ),
 

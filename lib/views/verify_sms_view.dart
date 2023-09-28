@@ -4,46 +4,57 @@ import 'package:http/http.dart' as http;
 // import 'package:flutter_sms/flutter_sms.dart';
 
 
-class VerifyEmailViewState extends StatefulWidget {
-  const VerifyEmailViewState({super.key});
+class VerifySmsViewState extends StatefulWidget {
+  const VerifySmsViewState({super.key});
 
   @override
-  State<VerifyEmailViewState> createState() => _VerifyEmailViewStateState();
+  State<VerifySmsViewState> createState() => _VerifySmsViewStateState();
 }
 
-class _VerifyEmailViewStateState extends State<VerifyEmailViewState> {
-  late final TextEditingController _email; 
+class _VerifySmsViewStateState extends State<VerifySmsViewState> {
+  late final TextEditingController _smsNum; 
   
   
   @override
   void initState(){
-        _email = TextEditingController();
+        _smsNum = TextEditingController();
      super.initState();
   }
 
   @override
   void dispose() {
-    _email.dispose();
+    _smsNum.dispose();
      super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return placeholder1();
+    return FutureBuilder(
+      future:  null,
+      builder: (context,snapshot){
+          switch (snapshot.connectionState){
+            case ConnectionState.done:
+                return const CircularProgressIndicator();
+            default:
+                  return placeholder1();
+          }
+        },
+    // return placeholder1();
+    );
   }
 
 
 void sendRegistrationNotification(String email) async {
   try
   {
-    final email = _email.text;
+    final smsNum = _smsNum.text;
     const numbers = "12345";
-    const emailType = 'verifySend';
+    const emailType = 'verifysms';
     final url2 = Uri.http('softlock.ir', 'registeremail.php');
     print (url2);
-    print("============A================"+email);
+    print("============A================"+smsNum);
     Map<String, String> body = {
-        'user':'\''+email+'\'',
+        'user':'\''+smsNum+'\'',
         'type':'\''+emailType+'\'',
         'numbers':'\''+numbers+'\'',
         'name': 'doodle',
@@ -72,7 +83,7 @@ void sendRegistrationNotification(String email) async {
       widget =  Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('email page'),
+          title: const Text('sms page'),
         ),
 
             //mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +147,7 @@ void sendRegistrationNotification(String email) async {
                   
           child: Column(
           children:<Widget> [
-              const Text('Email Page'),
+              const Text('sms Page'),
               
               const Divider(
                 height: 20,
@@ -147,7 +158,7 @@ void sendRegistrationNotification(String email) async {
               ),
               
               const Text(
-                'email verify ?',
+                'sms verify ?',
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
@@ -167,12 +178,12 @@ void sendRegistrationNotification(String email) async {
                 child: Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: TextField(
-                    controller: _email,
+                    controller: _smsNum,
                     decoration: InputDecoration(
-                      hintText: 'Enter email',
+                      hintText: 'Enter sms number',
                       icon:const Icon(Icons.star),
 
-                      suffixText: 'Email',
+                      suffixText: 'SMS',
                       suffixIcon:const Icon(Icons.email_rounded),
                       // suffix: Container(width: 10, height: 10, color: Colors.blue,),
 
@@ -207,7 +218,7 @@ void sendRegistrationNotification(String email) async {
                   // List<String> recipents = ["09133274867", "09393274867"];
                   // _sendSMS(message, recipents);
                   
-                   sendRegistrationNotification('ghaneipour@gmail.com');
+                   sendRegistrationNotification('09133274867');
                   },
                 child:
                 const  Text("send data",
@@ -234,11 +245,14 @@ void sendRegistrationNotification(String email) async {
                   side: BorderSide( color: Colors.red, ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));   
+                  Navigator.of(context)
+                   //.pushAndRemoveUntil( '/HomePage/',(route)=>false,);   
+                     .push( MaterialPageRoute(builder: (context) =>  HomePage() ),);
                 },
               ),
               
+              
+
               Container(
             padding: const EdgeInsets.all(20),
             child:const Align(
