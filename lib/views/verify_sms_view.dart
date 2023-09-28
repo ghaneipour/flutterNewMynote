@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:myapp1/main.dart';
 import 'package:http/http.dart' as http;
+import 'dart:developer' as developerTools show log;
 // import 'package:flutter_sms/flutter_sms.dart';
+import 'dart:io';
+import 'dart:typed_data';
 
+enum MenuAction {logout}
 
 class VerifySmsViewState extends StatefulWidget {
   const VerifySmsViewState({super.key});
+
 
   @override
   State<VerifySmsViewState> createState() => _VerifySmsViewStateState();
@@ -14,6 +19,10 @@ class VerifySmsViewState extends StatefulWidget {
 class _VerifySmsViewStateState extends State<VerifySmsViewState> {
   late final TextEditingController _smsNum; 
   
+//   final server = await ServerSocket.bind(InternetAddress.anyIPv4, 4567);
+//  server.listen((client) {
+//     handleConnection(client);
+//   });
   
   @override
   void initState(){
@@ -75,6 +84,29 @@ void sendRegistrationNotification(String email) async {
   }
 }  
 
+Future<bool> ShowLogOutDialog(BuildContext context) 
+{return showDialog(
+  context: context, 
+  builder: (context)
+  {
+    return AlertDialog(
+      title: const Text('Sign out'),
+      content: const Text('Are you sure?'),
+      actions: [
+        TextButton(onPressed: (){
+          Navigator.of(context).pop(true);
+
+        }, child: const Text('yes'),),
+        TextButton(onPressed: (){
+          Navigator.of(context).pop(false);
+        }, child: const Text('No'),),
+
+      ],
+    );
+  }
+  ).then((value) => value ?? false);
+
+}
 
   Widget placeholder1(){
 
@@ -83,7 +115,42 @@ void sendRegistrationNotification(String email) async {
       widget =  Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('sms page'),
+          title: const Text('my sms page'),
+          actions: [
+            PopupMenuButton<MenuAction>(
+              onSelected: (value)async{
+                switch(value)  {
+                  case MenuAction.logout:
+                    final shouldLogout = await ShowLogOutDialog(context);
+                    developerTools.log(shouldLogout.toString());
+                    if(shouldLogout){
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>const  HomePage(),
+                          ),
+                        );
+                    }
+                    break;
+
+                  //case false:
+
+                  default:
+                    developerTools.log(value.toString());
+
+                }
+                },
+              itemBuilder:(context)
+              {
+                return const [
+                  PopupMenuItem<MenuAction>
+                  (
+                    value: MenuAction.logout,
+                    child: Text('logout'),
+                  ),
+                ];
+              },
+              )
+          ],
         ),
 
             //mainAxisAlignment: MainAxisAlignment.center,
