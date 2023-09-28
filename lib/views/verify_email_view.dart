@@ -234,8 +234,9 @@ void sendRegistrationNotification(String email) async {
                   side: BorderSide( color: Colors.red, ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));   
+                  Navigator.of(context)
+                    .pushNamedAndRemoveUntil(
+                      '/HomePage/',(route)=>false,);
                 },
               ),
               

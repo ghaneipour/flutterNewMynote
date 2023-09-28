@@ -136,13 +136,19 @@ Future<void> _launchUrl() async {
                     isLogin= true;
                 }else if(response.body.indexOf("ghaneipour")>0){
                   isLogin= true;
-                  Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => VerifyEmailViewState()));
+                  Navigator.of(context)
+                    .pushNamedAndRemoveUntil(
+                    '/sendEmail/',(route)=>false,);
+                  //Navigator.of(context).push(
+                  //MaterialPageRoute(builder: (context) => VerifyEmailViewState()));
                 }
                 else{
                   isLogin= false;
-                  Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ErrorEmailViewState()));
+                  Navigator.of(context)
+                    .pushNamedAndRemoveUntil(
+                      '/errorEmail/',(route)=>false,);
+                  //Navigator.of(context).push(
+                  //MaterialPageRoute(builder: (context) => ErrorEmailViewState()));
                 }
                 print("=============C===============");  
               }

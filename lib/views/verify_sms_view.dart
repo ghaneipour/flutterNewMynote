@@ -124,11 +124,14 @@ Future<bool> ShowLogOutDialog(BuildContext context)
                     final shouldLogout = await ShowLogOutDialog(context);
                     developerTools.log(shouldLogout.toString());
                     if(shouldLogout){
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>const  HomePage(),
-                          ),
-                        );
+                      //Navigator.of(context).push(
+                      //  MaterialPageRoute(
+                      //    builder: (context) =>const  HomePage(),
+                      //    ),
+                      //  );
+                      Navigator.of(context)
+                    .pushNamedAndRemoveUntil(
+                      '/HomePage/',(route)=>false,);
                     }
                     break;
 
@@ -313,8 +316,9 @@ Future<bool> ShowLogOutDialog(BuildContext context)
                 ),
                 onPressed: () {
                   Navigator.of(context)
-                   //.pushAndRemoveUntil( '/HomePage/',(route)=>false,);   
-                     .push( MaterialPageRoute(builder: (context) =>  HomePage() ),);
+                   .pushNamedAndRemoveUntil(
+                     '/HomePage/',(route)=>false,);   
+                    // .push( MaterialPageRoute(builder: (context) =>  HomePage() ),);
                 },
               ),
               
